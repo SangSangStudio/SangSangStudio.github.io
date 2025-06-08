@@ -1,936 +1,381 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>말씀과 함께하는 일상, 말씀 다이어리</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상상 랩 - Imagination Lab</title>
     <style>
-      /* cspell:disable-file */
-      /* webkit printing magic: print all background colors */
-      html {
-        -webkit-print-color-adjust: exact;
-      }
       * {
-        box-sizing: border-box;
-        -webkit-print-color-adjust: exact;
-      }
-
-      html,
-      body {
         margin: 0;
         padding: 0;
-      }
-      @media only screen {
-        body {
-          margin: 2em auto;
-          max-width: 900px;
-          color: rgb(55, 53, 47);
-        }
+        box-sizing: border-box;
       }
 
       body {
-        line-height: 1.5;
-        white-space: pre-wrap;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #ffffff;
       }
 
-      a,
-      a.visited {
-        color: inherit;
-        text-decoration: underline;
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
       }
 
-      .pdf-relative-link-path {
-        font-size: 80%;
-        color: #444;
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
       }
 
-      h1,
-      h2,
-      h3 {
-        letter-spacing: -0.01em;
-        line-height: 1.2;
-        font-weight: 600;
-        margin-bottom: 0;
+      header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        pointer-events: none;
       }
 
-      .page-title {
+      .logo {
+        font-size: 3.5rem;
+        font-weight: 300;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .logo-highlight {
+        font-weight: 700;
+        background: linear-gradient(45deg, #ffffff, #f0f0f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .tagline {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        font-weight: 300;
+        position: relative;
+        z-index: 1;
+      }
+
+      section {
+        padding: 5rem 0;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+        color: #333;
+        font-weight: 300;
+      }
+
+      .section-title .highlight {
+        font-weight: 700;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 4rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 300;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 4rem;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s;
+      }
+
+      .stat-item:hover {
+        transform: translateY(-10px);
+      }
+
+      .stat-number {
         font-size: 2.5rem;
         font-weight: 700;
-        margin-top: 0;
-        margin-bottom: 0.75em;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
       }
 
-      h1 {
-        font-size: 1.875rem;
-        margin-top: 1.875rem;
+      .stat-label {
+        color: #666;
+        font-weight: 300;
       }
 
-      h2 {
-        font-size: 1.5rem;
-        margin-top: 1.5rem;
+      .about-section {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       }
 
-      h3 {
-        font-size: 1.25rem;
-        margin-top: 1.25rem;
+      .about-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 4rem;
+        align-items: center;
       }
 
-      .source {
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        padding: 1.5em;
-        word-break: break-all;
+      .about-text h3 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+        font-weight: 600;
       }
 
-      .callout {
-        border-radius: 3px;
-        padding: 1rem;
+      .about-text p {
+        margin-bottom: 1.5rem;
+        color: #666;
+        line-height: 1.8;
+        font-size: 1.1rem;
       }
 
-      figure {
-        margin: 1.25em 0;
-        page-break-inside: avoid;
+      .about-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
       }
 
-      figcaption {
-        opacity: 0.5;
-        font-size: 85%;
-        margin-top: 0.5em;
-      }
-
-      mark {
-        background-color: transparent;
-      }
-
-      .indented {
-        padding-left: 1.5em;
-      }
-
-      hr {
-        background: transparent;
-        display: block;
-        width: 100%;
-        height: 1px;
-        visibility: visible;
-        border: none;
-        border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      @media only print {
-        img {
-          max-height: 100vh;
-          object-fit: contain;
-        }
-      }
-
-      @page {
-        margin: 1in;
-      }
-
-      .collection-content {
-        font-size: 0.875rem;
-      }
-
-      .column-list {
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .column {
-        padding: 0 1em;
-      }
-
-      .column:first-child {
-        padding-left: 0;
-      }
-
-      .column:last-child {
-        padding-right: 0;
-      }
-
-      .table_of_contents-item {
-        display: block;
-        font-size: 0.875rem;
-        line-height: 1.3;
-        padding: 0.125rem;
-      }
-
-      .table_of_contents-indent-1 {
-        margin-left: 1.5rem;
-      }
-
-      .table_of_contents-indent-2 {
-        margin-left: 3rem;
-      }
-
-      .table_of_contents-indent-3 {
-        margin-left: 4.5rem;
-      }
-
-      .table_of_contents-link {
-        text-decoration: none;
-        opacity: 0.7;
-        border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-      }
-
-      table,
-      th,
-      td {
-        border: 1px solid rgba(55, 53, 47, 0.09);
-        border-collapse: collapse;
-      }
-
-      table {
-        border-left: none;
-        border-right: none;
-      }
-
-      th,
-      td {
-        font-weight: normal;
-        padding: 0.25em 0.5em;
-        line-height: 1.5;
-        min-height: 1.5em;
-        text-align: left;
-      }
-
-      th {
-        color: rgba(55, 53, 47, 0.6);
-      }
-
-      ol,
-      ul {
-        margin: 0;
-        margin-block-start: 0.6em;
-        margin-block-end: 0.6em;
-      }
-
-      li > ol:first-child,
-      li > ul:first-child {
-        margin-block-start: 0.6em;
-      }
-
-      ul > li {
-        list-style: disc;
-      }
-
-      ul.to-do-list {
-        padding-inline-start: 0;
-      }
-
-      ul.to-do-list > li {
-        list-style: none;
-      }
-
-      .to-do-children-checked {
-        text-decoration: line-through;
-        opacity: 0.375;
-      }
-
-      ul.toggle > li {
-        list-style: none;
-      }
-
-      ul {
-        padding-inline-start: 1.7em;
-      }
-
-      ul > li {
-        padding-left: 0.1em;
-      }
-
-      ol {
-        padding-inline-start: 1.6em;
-      }
-
-      ol > li {
-        padding-left: 0.2em;
-      }
-
-      .mono ol {
-        padding-inline-start: 2em;
-      }
-
-      .mono ol > li {
-        text-indent: -0.4em;
-      }
-
-      .toggle {
-        padding-inline-start: 0em;
-        list-style-type: none;
-      }
-
-      /* Indent toggle children */
-      .toggle > li > details {
-        padding-left: 1.7em;
-      }
-
-      .toggle > li > details > summary {
-        margin-left: -1.1em;
-      }
-
-      .selected-value {
-        display: inline-block;
-        padding: 0 0.5em;
-        background: rgba(206, 205, 202, 0.5);
-        border-radius: 3px;
-        margin-right: 0.5em;
-        margin-top: 0.3em;
-        margin-bottom: 0.3em;
-        white-space: nowrap;
-      }
-
-      .collection-title {
-        display: inline-block;
-        margin-right: 1em;
-      }
-
-      .page-description {
-        margin-bottom: 2em;
-      }
-
-      .simple-table {
-        margin-top: 1em;
-        font-size: 0.875rem;
-        empty-cells: show;
-      }
-      .simple-table td {
-        height: 29px;
-        min-width: 120px;
-      }
-
-      .simple-table th {
-        height: 29px;
-        min-width: 120px;
-      }
-
-      .simple-table-header-color {
-        background: rgb(247, 246, 243);
-        color: black;
-      }
-      .simple-table-header {
-        font-weight: 500;
-      }
-
-      time {
-        opacity: 0.5;
-      }
-
-      .icon {
-        display: inline-block;
-        max-width: 1.2em;
-        max-height: 1.2em;
-        text-decoration: none;
-        vertical-align: text-bottom;
-        margin-right: 0.5em;
-      }
-
-      img.icon {
-        border-radius: 3px;
-      }
-
-      .user-icon {
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: 100%;
-        margin-right: 0.5rem;
-      }
-
-      .user-icon-inner {
-        font-size: 0.8em;
-      }
-
-      .text-icon {
-        border: 1px solid #000;
+      .feature-item {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
         text-align: center;
+        transition: transform 0.3s;
+        border: 1px solid rgba(0, 0, 0, 0.05);
       }
 
-      .page-cover-image {
-        display: block;
-        object-fit: cover;
-        width: 100%;
-        max-height: 30vh;
+      .feature-item:hover {
+        transform: translateY(-5px);
       }
 
-      .page-header-icon {
-        font-size: 3rem;
+      .feature-icon {
+        font-size: 2.5rem;
         margin-bottom: 1rem;
       }
 
-      .page-header-icon-with-cover {
-        margin-top: -0.72em;
-        margin-left: 0.07em;
+      .feature-item h4 {
+        margin-bottom: 1rem;
+        color: #333;
+        font-weight: 600;
       }
 
-      .page-header-icon img {
-        border-radius: 3px;
-      }
-
-      .link-to-page {
-        margin: 1em 0;
-        padding: 0;
-        border: none;
-        font-weight: 500;
-      }
-
-      p > .user {
-        opacity: 0.5;
-      }
-
-      td > .user,
-      td > time {
-        white-space: nowrap;
-      }
-
-      input[type="checkbox"] {
-        transform: scale(1.5);
-        margin-right: 0.6em;
-        vertical-align: middle;
-      }
-
-      p {
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
-      }
-
-      .image {
-        border: none;
-        margin: 1.5em 0;
-        padding: 0;
-        border-radius: 0;
+      .contact-section {
+        background: #333;
+        color: white;
         text-align: center;
       }
 
-      .code,
-      code {
-        background: rgba(135, 131, 120, 0.15);
-        border-radius: 3px;
-        padding: 0.2em 0.4em;
-        border-radius: 3px;
-        font-size: 85%;
-        tab-size: 2;
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-top: 3rem;
       }
 
-      code {
-        color: #eb5757;
+      .contact-item {
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
       }
 
-      .code {
-        padding: 1.5em 1em;
+      .contact-item h4 {
+        margin-bottom: 1rem;
+        color: #667eea;
+        font-weight: 600;
       }
 
-      .code-wrap {
-        white-space: pre-wrap;
-        word-break: break-all;
+      .contact-item p {
+        font-weight: 300;
       }
 
-      .code > code {
-        background: none;
-        padding: 0;
-        font-size: 100%;
-        color: inherit;
+      footer {
+        background: #222;
+        color: white;
+        text-align: center;
+        padding: 3rem 0;
       }
 
-      blockquote {
-        font-size: 1.25em;
-        margin: 1em 0;
-        padding-left: 1em;
-        border-left: 3px solid rgb(55, 53, 47);
-      }
-
-      .bookmark {
+      .btn {
+        display: inline-block;
+        padding: 15px 40px;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
         text-decoration: none;
-        max-height: 8em;
-        padding: 0;
-        display: flex;
-        width: 100%;
-        align-items: stretch;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: all 0.3s;
+        margin: 1rem 0.5rem;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
       }
 
-      .bookmark-title {
-        font-size: 0.85em;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        height: 1.75em;
-        white-space: nowrap;
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
       }
 
-      .bookmark-text {
-        display: flex;
-        flex-direction: column;
+      .btn-outline {
+        background: transparent;
+        border: 2px solid #667eea;
+        color: #667eea;
       }
 
-      .bookmark-info {
-        flex: 4 1 180px;
-        padding: 12px 14px 14px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+      .btn-outline:hover {
+        background: #667eea;
+        color: white;
       }
 
-      .bookmark-image {
-        width: 33%;
-        flex: 1 1 180px;
-        display: block;
-        position: relative;
-        object-fit: cover;
-        border-radius: 1px;
-      }
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 15px;
+        }
 
-      .bookmark-description {
-        color: rgba(55, 53, 47, 0.6);
-        font-size: 0.75em;
-        overflow: hidden;
-        max-height: 4.5em;
-        word-break: break-word;
-      }
+        .section-title {
+          font-size: 2.2rem;
+        }
 
-      .bookmark-href {
-        font-size: 0.75em;
-        margin-top: 0.25em;
-      }
+        .logo {
+          font-size: 2.8rem;
+        }
 
-      .sans {
-        font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont,
-          "Segoe UI Variable Display", "Segoe UI", Helvetica,
-          "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-          "Segoe UI Symbol";
-      }
-      .code {
-        font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono",
-          "Liberation Mono", Courier, monospace;
-      }
-      .serif {
-        font-family: Lyon-Text, Georgia, ui-serif, serif;
-      }
-      .mono {
-        font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
-      }
-      .pdf .sans {
-        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
-          "Segoe UI Variable Display", "Segoe UI", Helvetica,
-          "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-          "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK JP";
-      }
-      .pdf:lang(zh-CN) .sans {
-        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
-          "Segoe UI Variable Display", "Segoe UI", Helvetica,
-          "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-          "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK SC";
-      }
-      .pdf:lang(zh-TW) .sans {
-        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
-          "Segoe UI Variable Display", "Segoe UI", Helvetica,
-          "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-          "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK TC";
-      }
-      .pdf:lang(ko-KR) .sans {
-        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont,
-          "Segoe UI Variable Display", "Segoe UI", Helvetica,
-          "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji",
-          "Segoe UI Symbol", "Twemoji", "Noto Color Emoji", "Noto Sans CJK KR";
-      }
-      .pdf .code {
-        font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas,
-          "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji",
-          "Noto Color Emoji", "Noto Sans Mono CJK JP";
-      }
-      .pdf:lang(zh-CN) .code {
-        font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas,
-          "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji",
-          "Noto Color Emoji", "Noto Sans Mono CJK SC";
-      }
-      .pdf:lang(zh-TW) .code {
-        font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas,
-          "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji",
-          "Noto Color Emoji", "Noto Sans Mono CJK TC";
-      }
-      .pdf:lang(ko-KR) .code {
-        font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas,
-          "PT Mono", "Liberation Mono", Courier, monospace, "Twemoji",
-          "Noto Color Emoji", "Noto Sans Mono CJK KR";
-      }
-      .pdf .serif {
-        font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji",
-          "Noto Color Emoji", "Noto Serif CJK JP";
-      }
-      .pdf:lang(zh-CN) .serif {
-        font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji",
-          "Noto Color Emoji", "Noto Serif CJK SC";
-      }
-      .pdf:lang(zh-TW) .serif {
-        font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji",
-          "Noto Color Emoji", "Noto Serif CJK TC";
-      }
-      .pdf:lang(ko-KR) .serif {
-        font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, "Twemoji",
-          "Noto Color Emoji", "Noto Serif CJK KR";
-      }
-      .pdf .mono {
-        font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace,
-          "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK JP";
-      }
-      .pdf:lang(zh-CN) .mono {
-        font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace,
-          "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK SC";
-      }
-      .pdf:lang(zh-TW) .mono {
-        font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace,
-          "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK TC";
-      }
-      .pdf:lang(ko-KR) .mono {
-        font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace,
-          "Twemoji", "Noto Color Emoji", "Noto Sans Mono CJK KR";
-      }
-      .highlight-default {
-        color: rgba(50, 48, 44, 1);
-      }
-      .highlight-gray {
-        color: rgba(120, 119, 116, 1);
-        fill: rgba(120, 119, 116, 1);
-      }
-      .highlight-brown {
-        color: rgba(159, 107, 83, 1);
-        fill: rgba(159, 107, 83, 1);
-      }
-      .highlight-orange {
-        color: rgba(217, 115, 13, 1);
-        fill: rgba(217, 115, 13, 1);
-      }
-      .highlight-yellow {
-        color: rgba(203, 145, 47, 1);
-        fill: rgba(203, 145, 47, 1);
-      }
-      .highlight-teal {
-        color: rgba(68, 131, 97, 1);
-        fill: rgba(68, 131, 97, 1);
-      }
-      .highlight-blue {
-        color: rgba(51, 126, 169, 1);
-        fill: rgba(51, 126, 169, 1);
-      }
-      .highlight-purple {
-        color: rgba(144, 101, 176, 1);
-        fill: rgba(144, 101, 176, 1);
-      }
-      .highlight-pink {
-        color: rgba(193, 76, 138, 1);
-        fill: rgba(193, 76, 138, 1);
-      }
-      .highlight-red {
-        color: rgba(212, 76, 71, 1);
-        fill: rgba(212, 76, 71, 1);
-      }
-      .highlight-default_background {
-        color: rgba(50, 48, 44, 1);
-      }
-      .highlight-gray_background {
-        background: rgba(248, 248, 247, 1);
-      }
-      .highlight-brown_background {
-        background: rgba(244, 238, 238, 1);
-      }
-      .highlight-orange_background {
-        background: rgba(251, 236, 221, 1);
-      }
-      .highlight-yellow_background {
-        background: rgba(251, 243, 219, 1);
-      }
-      .highlight-teal_background {
-        background: rgba(237, 243, 236, 1);
-      }
-      .highlight-blue_background {
-        background: rgba(231, 243, 248, 1);
-      }
-      .highlight-purple_background {
-        background: rgba(248, 243, 252, 1);
-      }
-      .highlight-pink_background {
-        background: rgba(252, 241, 246, 1);
-      }
-      .highlight-red_background {
-        background: rgba(253, 235, 236, 1);
-      }
-      .block-color-default {
-        color: inherit;
-        fill: inherit;
-      }
-      .block-color-gray {
-        color: rgba(120, 119, 116, 1);
-        fill: rgba(120, 119, 116, 1);
-      }
-      .block-color-brown {
-        color: rgba(159, 107, 83, 1);
-        fill: rgba(159, 107, 83, 1);
-      }
-      .block-color-orange {
-        color: rgba(217, 115, 13, 1);
-        fill: rgba(217, 115, 13, 1);
-      }
-      .block-color-yellow {
-        color: rgba(203, 145, 47, 1);
-        fill: rgba(203, 145, 47, 1);
-      }
-      .block-color-teal {
-        color: rgba(68, 131, 97, 1);
-        fill: rgba(68, 131, 97, 1);
-      }
-      .block-color-blue {
-        color: rgba(51, 126, 169, 1);
-        fill: rgba(51, 126, 169, 1);
-      }
-      .block-color-purple {
-        color: rgba(144, 101, 176, 1);
-        fill: rgba(144, 101, 176, 1);
-      }
-      .block-color-pink {
-        color: rgba(193, 76, 138, 1);
-        fill: rgba(193, 76, 138, 1);
-      }
-      .block-color-red {
-        color: rgba(212, 76, 71, 1);
-        fill: rgba(212, 76, 71, 1);
-      }
-      .block-color-default_background {
-        color: inherit;
-        fill: inherit;
-      }
-      .block-color-gray_background {
-        background: rgba(248, 248, 247, 1);
-      }
-      .block-color-brown_background {
-        background: rgba(244, 238, 238, 1);
-      }
-      .block-color-orange_background {
-        background: rgba(251, 236, 221, 1);
-      }
-      .block-color-yellow_background {
-        background: rgba(251, 243, 219, 1);
-      }
-      .block-color-teal_background {
-        background: rgba(237, 243, 236, 1);
-      }
-      .block-color-blue_background {
-        background: rgba(231, 243, 248, 1);
-      }
-      .block-color-purple_background {
-        background: rgba(248, 243, 252, 1);
-      }
-      .block-color-pink_background {
-        background: rgba(252, 241, 246, 1);
-      }
-      .block-color-red_background {
-        background: rgba(253, 235, 236, 1);
-      }
-      .select-value-color-uiBlue {
-        background-color: undefined;
-      }
-      .select-value-color-pink {
-        background-color: rgba(225, 136, 179, 0.27);
-      }
-      .select-value-color-purple {
-        background-color: rgba(168, 129, 197, 0.27);
-      }
-      .select-value-color-green {
-        background-color: rgba(123, 183, 129, 0.27);
-      }
-      .select-value-color-gray {
-        background-color: rgba(84, 72, 49, 0.15);
-      }
-      .select-value-color-transparentGray {
-        background-color: undefined;
-      }
-      .select-value-color-translucentGray {
-        background-color: undefined;
-      }
-      .select-value-color-orange {
-        background-color: rgba(224, 124, 57, 0.27);
-      }
-      .select-value-color-brown {
-        background-color: rgba(210, 162, 141, 0.35);
-      }
-      .select-value-color-red {
-        background-color: rgba(244, 171, 159, 0.4);
-      }
-      .select-value-color-yellow {
-        background-color: rgba(236, 191, 66, 0.39);
-      }
-      .select-value-color-blue {
-        background-color: rgba(93, 165, 206, 0.27);
-      }
-      .select-value-color-pageGlass {
-        background-color: undefined;
-      }
-      .select-value-color-washGlass {
-        background-color: undefined;
-      }
+        .apps-grid {
+          grid-template-columns: 1fr;
+        }
 
-      .checkbox {
-        display: inline-flex;
-        vertical-align: text-bottom;
-        width: 16;
-        height: 16;
-        background-size: 16px;
-        margin-left: 2px;
-        margin-right: 5px;
-      }
-
-      .checkbox-on {
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-      }
-
-      .checkbox-off {
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+        .about-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
       }
     </style>
   </head>
   <body>
-    <article id="1d2b5a59-befb-80e0-a141-fd32cf700c86" class="page sans">
-      <header>
-        <h1 class="page-title">말씀과 함께하는 일상, 말씀 다이어리</h1>
-        <p class="page-description"></p>
-      </header>
-      <div class="page-body">
-        <h3 id="1d2b5a59-befb-8089-9804-ddf042a8c7fd" class="">
-          <strong>당신의 영적 성장을 위한 최고의 동반자</strong>
-        </h3>
-        <div id="1d2b5a59-befb-80fa-9dc2-d318f6299823" class="column-list">
-          <div
-            id="1d2b5a59-befb-8065-9549-e45d7b683a14"
-            style="width: 100%"
-            class="column"
-          >
-            <figure
-              class="block-color-blue_background callout"
-              style="white-space: pre-wrap; display: flex"
-              id="1d2b5a59-befb-8072-ba34-ef21b8f664b6"
-            >
-              <div style="width: 100%">
-                <strong>깔끔한 UI</strong>
-                <p id="1d2b5a59-befb-80c2-8c5f-dc358c51ee73" class="">
-                  복잡한 기능은 걷어내고, 말씀에만 집중할 수 있는 심플하고
-                  직관적인 디자인을 제공합니다.
-                </p>
-              </div>
-            </figure>
-            <figure
-              class="block-color-teal_background callout"
-              style="white-space: pre-wrap; display: flex"
-              id="1d2b5a59-befb-8088-b598-fbe54a4bfd70"
-            >
-              <div style="width: 100%">
-                <strong>북마크</strong>
-                <p id="1d2b5a59-befb-80eb-8026-cd5ba1e1f1af" class="">
-                  감동받은 구절을 쉽게 저장하고 언제든지 다시 찾아볼 수
-                  있습니다.
-                </p>
-              </div>
-            </figure>
-            <figure
-              class="block-color-yellow_background callout"
-              style="white-space: pre-wrap; display: flex"
-              id="1d2b5a59-befb-806d-a95c-c75764e1da74"
-            >
-              <div style="width: 100%">
-                <strong>성경 목록</strong>
-                <p id="1d2b5a59-befb-8033-bb3f-cf8ccae6965f" class="">
-                  구약부터 신약까지, 모든 성경을 체계적으로 정리하여 쉽게 찾아볼
-                  수 있습니다.
-                </p>
-              </div>
-            </figure>
-            <figure
-              class="block-color-gray_background callout"
-              style="white-space: pre-wrap; display: flex"
-              id="1d2b5a59-befb-8054-a36e-ceedd2f190d6"
-            >
-              <div style="width: 100%">
-                <p id="1d2b5a59-befb-8001-a3f3-dd2a1b8e7c22" class="">
-                  <strong>다국어</strong>
-                </p>
-                <p id="1d2b5a59-befb-802b-99a7-c4c1c1e67cd5" class="">
-                  한국어, 영어를 포함해 다국어 말씀을 지원합니다.
-                </p>
-              </div>
-            </figure>
-            <p id="1d2b5a59-befb-80e2-b5d0-f70e6cdedf63" class=""></p>
+    <header>
+      <div class="container">
+        <div class="logo">상상 <span class="logo-highlight">랩</span></div>
+        <div class="tagline">상상을 현실로 만드는 앱 개발 스튜디오</div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">무한한 가능성</div>
           </div>
-          <div
-            id="1d2b5a59-befb-8001-9389-dc33187c70d5"
-            style="width: 100%"
-            class="column"
-          >
-            <figure id="1d2b5a59-befb-80d0-a7d8-c9c5631309cc" class="image">
-              <a href="mockup1.png"
-                ><img style="width: 336px" src="mockup1.png"
-              /></a>
-            </figure>
-            <p id="1d2b5a59-befb-809d-8eea-fc50a5b68052" class=""></p>
+          <div class="stat-item">
+            <div class="stat-number">2025</div>
+            <div class="stat-label">설립 연도</div>
           </div>
         </div>
-        <hr id="1d2b5a59-befb-80be-9ed4-e7c56f94fa6c" />
-        <h2 id="1d2b5a59-befb-8043-826e-da8c0eb2f80a" class="">
-          &quot;바이블링과 함께라면 매일의 말씀 읽기가 더욱 특별해집니다&quot;
-        </h2>
-        <div id="1d2b5a59-befb-80e3-8d1e-d3525d5c3114" class="column-list">
-          <div
-            id="1d2b5a59-befb-80d6-a865-ec7ed2dce8be"
-            style="width: 100%"
-            class="column"
-          >
-            <figure id="1d2b5a59-befb-8079-b981-ee429df53b55" class="image">
-              <a href="resized_kor_preview_1.png"
-                ><img style="width: 1320px" src="resized_kor_preview_1.png"
-              /></a>
-            </figure>
-            <p id="1d2b5a59-befb-80b7-8172-d41211262046" class=""></p>
-            <figure id="1d2b5a59-befb-80f4-ae3d-ce65f5f36d6d" class="image">
-              <a href="resized_kor_preview_3.png"
-                ><img style="width: 1320px" src="resized_kor_preview_3.png"
-              /></a>
-            </figure>
-          </div>
-          <div
-            id="1d2b5a59-befb-8010-a81b-fc7bf9fc75d6"
-            style="width: 100%"
-            class="column"
-          >
-            <figure id="1d2b5a59-befb-8022-9020-c1e432233fed" class="image">
-              <a href="./resized_kor_preview_2.png"
-                ><img style="width: 1320px" src="./resized_kor_preview_2.png"
-              /></a>
-            </figure>
-            <p id="1d2b5a59-befb-808b-9bdb-ce459469be04" class=""></p>
-            <figure id="1d2b5a59-befb-80b3-a2e8-d00a8cf6632f" class="image">
-              <a href="resized_kor_preview_4.png"
-                ><img style="width: 1320px" src="resized_kor_preview_4.png"
-              /></a>
-            </figure>
-          </div>
-        </div>
-        <h2 id="1d2b5a59-befb-80b9-9ee3-fc801377576b" class="">
-          &quot;말씀이 삶의 중심이 되는 순간&quot;
-        </h2>
-        <p id="1d2b5a59-befb-80fc-b2d7-de36fd3a2a96" class="">
-          매일 조금씩 성장하는 신앙생활, 바이블링이 함께합니다.
-        </p>
-        <p id="1d2b5a59-befb-808c-ad05-e3fdc89e1b9a" class=""></p>
-        <hr id="1d2b5a59-befb-807a-b5c5-f032a2db98ed" />
-        <p id="1d2b5a59-befb-80f9-bed1-ed70d95861d8" class=""></p>
-        <p id="1d2b5a59-befb-80b0-97a6-c9dd6a3c6103" class="">
-          문의사항 : imagin.sangsang.studio@gmail.com
-        </p>
-        <p id="1d2b5a59-befb-8085-a307-f553706961d2" class="">
-          <a
-            href="https://www.notion.so/1d2b5a59befb80f58241f650da7f916f?pvs=21"
-            >개인정보 처리방침
-          </a>
-        </p>
-        <p id="1d2b5a59-befb-803a-85c5-e502ec0564c3" class=""></p>
       </div>
-    </article>
-    <span class="sans" style="font-size: 14px; padding-top: 2em"></span>
+    </header>
+
+    <section id="about" class="about-section">
+      <div class="container">
+        <h2 class="section-title">
+          상상 랩 <span class="highlight">소개</span>
+        </h2>
+        <p class="section-subtitle">
+          혁신적인 아이디어와 최신 기술을 결합하여 사용자의 일상을 더 풍요롭게
+          만드는 모바일 애플리케이션을 개발합니다.
+        </p>
+
+        <div class="about-content">
+          <div class="about-text">
+            <h3>우리의 비전</h3>
+            <p>
+              상상 랩은 사용자 중심의 혁신적인 모바일 애플리케이션을 통해 일상의
+              불편함을 해결하고 새로운 가치를 창출하는 것을 목표로 합니다.
+            </p>
+            <p>
+              우리는 단순한 앱을 만드는 것이 아니라, 사용자의 삶에 긍정적인
+              변화를 가져오는 의미있는 서비스를 개발합니다.
+            </p>
+          </div>
+          <div class="about-features">
+            <div class="feature-item">
+              <div class="feature-icon">🚀</div>
+              <h4>혁신적 아이디어</h4>
+              <p>창의적이고 실용적인 아이디어로 새로운 가치를 창출합니다</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">👥</div>
+              <h4>사용자 중심</h4>
+              <p>사용자의 니즈를 깊이 이해하고 최적의 경험을 제공합니다</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">⚡</div>
+              <h4>빠른 실행력</h4>
+              <p>아이디어부터 출시까지 신속하고 효율적으로 진행합니다</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🎯</div>
+              <h4>품질 보장</h4>
+              <p>안정성과 성능을 최우선으로 하는 고품질 앱을 개발합니다</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <div class="container">
+        <h2 class="section-title">연락처</h2>
+        <p class="section-subtitle">
+          궁금한 점이나 제안사항이 있으시면 언제든 연락해주세요
+        </p>
+
+        <div class="contact-grid">
+          <div class="contact-item">
+            <h4>문의</h4>
+            <p>support@sangsang.app</p>
+          </div>
+          <div class="contact-item">
+            <h4>회사 정보</h4>
+            <p>상상 랩<br />사업자등록번호: 708-27-02093</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 3rem">
+          <a href="mailto:contact@imaginationlab.kr" class="btn">문의하기</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 상상 랩 (SangSang Lab). All rights reserved.</p>
+        <p>상상을 현실로 만드는 모바일 앱 개발 스튜디오</p>
+      </div>
+    </footer>
   </body>
 </html>
